@@ -9,7 +9,7 @@
 
 NodeBB by itself contains a "common core" of basic functionality, while additional functionality and integrations are enabled through the use of third-party plugins.
 
-### [Try it now](//try.nodebb.org) | [Documentation](//docs.nodebb.org)
+### [Try it now](//try.nodebb.org) | [Documentation]
 
 ## Screenshots
 
@@ -82,3 +82,10 @@ Interested in a sublicense agreement for use of NodeBB in a non-free/restrictive
 * Unofficial IRC community &ndash; channel `#nodebb` on Libera.chat
 * [Follow us on Twitter](http://www.twitter.com/NodeBB/ "NodeBB Twitter")
 * [Like us on Facebook](http://www.facebook.com/NodeBB/ "NodeBB Facebook")
+
+## Team Members
+Kester Tan
+Anuja Uppuluri
+Phillip Araujo
+Camille Day
+

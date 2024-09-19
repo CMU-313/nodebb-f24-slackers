@@ -1,0 +1,6 @@
+{
+    "id": "nodebb-theme-mytheme",
+    "name": "My Theme",
+    "description": "My custom theme for NodeBB",
+    "baseTheme": "nodebb-theme-harmony"
+}

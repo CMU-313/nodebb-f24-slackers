@@ -26,18 +26,19 @@ define('chat', [
 			}
 			if (module.modalExists(roomId)) {
 				loadAndCenter(module.getModal(roomId));
-			} else {
-				api.get(`/chats/${roomId}`, {
-					uid: uid || app.user.uid,
-				}).then((roomData) => {
-					roomData.users = roomData.users.filter(function (user) {
-						return user && parseInt(user.uid, 10) !== parseInt(app.user.uid, 10);
-					});
-					roomData.uid = uid || app.user.uid;
-					roomData.isSelf = true;
-					module.createModal(roomData, loadAndCenter);
-				}).catch(alerts.error);
-			}
+        return;
+			} 
+      
+			api.get(`/chats/${roomId}`, {
+				uid: uid || app.user.uid,
+			}).then((roomData) => {
+				roomData.users = roomData.users.filter(function (user) {
+					return user && parseInt(user.uid, 10) !== parseInt(app.user.uid, 10);
+				});
+				roomData.uid = uid || app.user.uid;
+				roomData.isSelf = true;
+				module.createModal(roomData, loadAndCenter);
+			}).catch(alerts.error);
 		});
 	};
 

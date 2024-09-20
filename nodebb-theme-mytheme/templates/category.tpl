@@ -35,8 +35,8 @@
   </div>
   <div>
     <div class="input-group">
-      <input type="text" class="form-control form-control-sm" placeholder="[[global:search]]" name="query" id="search-text">
-      <button id="search-button" class="btn btn-primary btn-sm" aria-label="[[global:search]]">
+      <input type="text" class="form-control form-control-sm" placeholder="[[global:search]]" name="query" id="category-search-text">
+      <button id="category-search-button" class="btn btn-primary btn-sm" aria-label="[[global:search]]">
         <i class="fa fa-search"></i>
       </button>
     </div>

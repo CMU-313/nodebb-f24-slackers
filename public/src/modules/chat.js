@@ -26,9 +26,9 @@ define('chat', [
 			}
 			if (module.modalExists(roomId)) {
 				loadAndCenter(module.getModal(roomId));
-        return;
-			} 
-      
+				return;
+			}
+
 			api.get(`/chats/${roomId}`, {
 				uid: uid || app.user.uid,
 			}).then((roomData) => {

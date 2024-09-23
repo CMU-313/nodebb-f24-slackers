@@ -70,9 +70,10 @@ module.exports = function (User) {
 
 			// Dissociate the upload from pids, if any
 			const pids = await db.getSortedSetsMembers(uploadNames.map(relativePath => `upload:${md5(relativePath)}:pids`));
-			await Promise.all(pids.map(async (pids, idx) => Promise.all(
+			const dissociatePids = (pids, idx) => Promise.all(
 				pids.map(async pid => posts.uploads.dissociate(pid, uploadNames[idx]))
-			)));
+			);
+			await Promise.all(pids.map(async (pids, idx) => dissociatePids(pids, idx)));
 		}, { batch: 50 });
 	};
 

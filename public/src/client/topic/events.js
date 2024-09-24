@@ -40,6 +40,9 @@ define('forum/topic/events', [
 		'posts.bookmark': togglePostBookmark,
 		'posts.unbookmark': togglePostBookmark,
 
+		'posts.answer': toggleAnswered,
+		'posts.unanswer': toggleAnswered,
+
 		'posts.upvote': togglePostVote,
 		'posts.downvote': togglePostVote,
 		'posts.unvote': togglePostVote,
@@ -220,6 +223,10 @@ define('forum/topic/events', [
 
 		el.find('[component="post/bookmark/on"]').toggleClass('hidden', !data.isBookmarked);
 		el.find('[component="post/bookmark/off"]').toggleClass('hidden', data.isBookmarked);
+	}
+
+	function toggleAnswered(data) {
+		console.log('hi');
 	}
 
 	function togglePostVote(data) {

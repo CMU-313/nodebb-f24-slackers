@@ -225,7 +225,7 @@ define('forum/topic/events', [
 		el.find('[component="post/bookmark/off"]').toggleClass('hidden', data.isBookmarked);
 	}
 
-	function toggleAnswered(data) {
+	function toggleAnswered() {
 		console.log('hi');
 	}
 

@@ -54,7 +54,7 @@
 			</div>
 			{{{ end }}}
 			<div class="d-flex align-items-center gap-1 flex-grow-1 justify-content-end">
-				{{{ if posts.verified }}}
+				{{{ if posts.verify }}}
 					<span class="menu-icon"><i class="fa fa-fw text-secondary fa-check"></i></span>
 				{{{ end }}}
 				<span class="bookmarked opacity-0 text-primary"><i class="fa fa-bookmark-o"></i></span>

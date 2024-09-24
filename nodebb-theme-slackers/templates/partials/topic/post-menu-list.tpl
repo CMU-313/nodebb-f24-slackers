@@ -30,7 +30,7 @@
 </li>
 {{{ end }}}
 
-{{{ if !posts.verified }}}
+{{{ if !posts.verify }}}
 <li>
 	<a class="dropdown-item rounded-1 d-flex align-items-center gap-2" component="post/verify" role="menuitem" href="#">
 		<span class="menu-icon"><i class="fa fa-fw text-secondary fa-check"></i></span> Verify Message

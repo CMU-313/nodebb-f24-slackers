@@ -129,6 +129,10 @@ define('forum/topic/postTools', [
 			return bookmarkPost($(this), getData($(this), 'data-pid'));
 		});
 
+		postContainer.on('click', '[component="post/verify"]', function () {
+			return verifyMessage($(this));
+		});
+
 		postContainer.on('click', '[component="post/upvote"]', function () {
 			return votes.toggleVote($(this), '.upvoted', 1);
 		});
@@ -402,6 +406,14 @@ define('forum/topic/postTools', [
 		const action = !postEl.hasClass('deleted') ? 'delete' : 'restore';
 
 		postAction(action, pid);
+	}
+
+	async function verifyMessage(button) {
+		const pid = getData(button, 'data-pid');
+		const method = 'put';
+		const action = 'verify';
+		console.log('trying to call api');
+		api[method](`/posts/${pid}/${action}`).catch(alerts.error);
 	}
 
 	function purgePost(button) {

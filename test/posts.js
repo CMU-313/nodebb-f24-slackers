@@ -281,6 +281,14 @@ describe('Post\'s', () => {
 		});
 	});
 
+	describe('answering', async () => {
+		it('should mark post verified', async () => {
+			await apiPosts.verify({ uid: voterUid }, { pid: postData.pid, room_id: `topic_${postData.tid}` });
+			const isAnswered = await posts.getPostField(postData.pid, 'verify');
+			assert.strictEqual(isAnswered, 1);
+		});
+	});
+
 	describe('post tools', () => {
 		it('should error if data is invalid', (done) => {
 			socketPosts.loadPostTools({ uid: globalModUid }, null, (err) => {

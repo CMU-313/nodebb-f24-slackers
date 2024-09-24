@@ -153,6 +153,18 @@ Posts.unbookmark = async (req, res) => {
 	helpers.formatApiResponse(200, res);
 };
 
+Posts.verify = async (req, res) => {
+	const data = await mock(req);
+	await api.posts.verify(req, data);
+	helpers.formatApiResponse(200, res);
+};
+
+Posts.unverify = async (req, res) => {
+	const data = await mock(req);
+	await api.posts.unverify(req, data);
+	helpers.formatApiResponse(200, res);
+};
+
 Posts.getDiffs = async (req, res) => {
 	helpers.formatApiResponse(200, res, await api.posts.getDiffs(req, { ...req.params }));
 };

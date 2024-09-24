@@ -40,6 +40,9 @@ define('forum/topic/events', [
 		'posts.bookmark': togglePostBookmark,
 		'posts.unbookmark': togglePostBookmark,
 
+		'posts.verify': toggleVerifyMessage,
+		'posts.unverify': toggleVerifyMessage,
+
 		'posts.upvote': togglePostVote,
 		'posts.downvote': togglePostVote,
 		'posts.unvote': togglePostVote,
@@ -64,6 +67,10 @@ define('forum/topic/events', [
 			}
 		}
 	};
+
+	function toggleVerifyMessage(data) {
+		console.log(data);
+	}
 
 	function onUserStatusChange(data) {
 		app.updateUserStatus($('[data-uid="' + data.uid + '"] [component="user/status"]'), data.status);

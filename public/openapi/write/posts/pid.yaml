@@ -40,6 +40,10 @@ get:
                     type: number
                   deleted:
                     type: number
+                  verify:
+                    type: number
+                  verifyUid:
+                    type: number
                   answered:
                     type: number
                   upvotes:

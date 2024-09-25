@@ -186,6 +186,8 @@ paths:
     $ref: 'write/posts/pid/upvoters.yaml'
   /posts/{pid}/bookmark:
     $ref: 'write/posts/pid/bookmark.yaml'
+  /posts/{pid}/verify:
+      $ref: 'write/posts/pid/verify.yaml'
   /posts/{pid}/diffs:
     $ref: 'write/posts/pid/diffs.yaml'
   /posts/{pid}/diffs/{since}:

@@ -421,6 +421,14 @@ postsAPI.unbookmark = async function (caller, data) {
 	return await apiHelpers.postCommand(caller, 'unbookmark', 'bookmarked', '', data);
 };
 
+postsAPI.verify = async function (caller, data) {
+	return await apiHelpers.postCommand(caller, 'verify', 'verify', '', data);
+};
+
+postsAPI.unverify = async function (caller, data) {
+	return await apiHelpers.postCommand(caller, 'unverify', 'unverify', '', data);
+};
+
 async function diffsPrivilegeCheck(pid, uid) {
 	const [deleted, privilegesData] = await Promise.all([
 		posts.getPostField(pid, 'deleted'),

@@ -42,7 +42,7 @@ define('forum/topic/events', [
 
 		'posts.verify': toggleVerifyMessage,
 		'posts.unverify': toggleVerifyMessage,
-    
+
 		'posts.answer': toggleAnswered,
 		'posts.unanswer': toggleAnswered,
 

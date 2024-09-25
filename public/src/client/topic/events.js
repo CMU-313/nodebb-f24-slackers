@@ -226,7 +226,7 @@ define('forum/topic/events', [
 	}
 
 	function toggleAnswered() {
-		console.log('hi');
+		console.log('Toggling answered field.');
 	}
 
 	function togglePostVote(data) {

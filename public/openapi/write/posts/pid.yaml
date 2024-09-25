@@ -40,11 +40,15 @@ get:
                     type: number
                   deleted:
                     type: number
+                  answered:
+                    type: number
                   upvotes:
                     type: number
                   downvotes:
                     type: number
                   deleterUid:
+                    type: number
+                  answererUid:
                     type: number
                   edited:
                     type: number

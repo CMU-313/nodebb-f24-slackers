@@ -45,6 +45,8 @@ get:
                           type: number
                         deleted:
                           type: number
+                        answered:
+                          type: number
                         upvotes:
                           type: number
                         downvotes:

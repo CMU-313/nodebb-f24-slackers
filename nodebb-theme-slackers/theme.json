@@ -1,0 +1,6 @@
+{
+    "id": "nodebb-theme-slackers",
+    "name": "Slackers",
+    "description": "Our Slackers custom theme for NodeBB",
+    "baseTheme": "nodebb-theme-harmony"
+}

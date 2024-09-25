@@ -52,6 +52,9 @@ define('forum/category', [
 
 		hooks.fire('action:topics.loaded', { topics: ajaxify.data.topics });
 		hooks.fire('action:category.loaded', { cid: ajaxify.data.cid });
+
+		$('#category-search-text').on('keyup', () => console.log('typing?'));
+		$('#category-search-button').on('click', () => console.log('clicking?'));
 	};
 
 	function handleScrollToTopicIndex() {

@@ -155,6 +155,17 @@ function deserializePayload(payload) {
 	return { params, callback };
 }
 
+async function callMethod(methodToCall, socket, params, callback) {
+	if (methodToCall.constructor && methodToCall.constructor.name === 'AsyncFunction') {
+		const result = await methodToCall(socket, params);
+		callback(null, result);
+	} else {
+		methodToCall(socket, params, (err, result) => {
+			callback(err ? { message: err.message } : null, result);
+		});
+	}
+}
+
 async function onMessage(socket, payload) {
 	const { event, params, callback } = payload;
 	try {
@@ -202,15 +213,7 @@ async function onMessage(socket, payload) {
 		if (Namespaces[namespace].before) {
 			await Namespaces[namespace].before(socket, event, params);
 		}
-
-		if (methodToCall.constructor && methodToCall.constructor.name === 'AsyncFunction') {
-			const result = await methodToCall(socket, params);
-			callback(null, result);
-		} else {
-			methodToCall(socket, params, (err, result) => {
-				callback(err ? { message: err.message } : null, result);
-			});
-		}
+		await callMethod(methodToCall, socket, params, callback);
 	} catch (err) {
 		winston.debug(`${event}\n${err.stack ? err.stack : err.message}`);
 		callback({ message: err.message });

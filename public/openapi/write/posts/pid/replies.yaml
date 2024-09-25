@@ -47,6 +47,8 @@ get:
                           type: number
                         verify:
                           type: number
+                        answered:
+                          type: number
                         upvotes:
                           type: number
                         downvotes:

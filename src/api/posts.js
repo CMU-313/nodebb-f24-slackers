@@ -156,6 +156,14 @@ postsAPI.edit = async function (caller, data) {
 	return returnData;
 };
 
+postsAPI.answer = async function (caller, data) {
+	return await apiHelpers.postCommand(caller, 'answer', 'answered', '', data);
+};
+
+postsAPI.unanswer = async function (caller, data) {
+	return await apiHelpers.postCommand(caller, 'unanswer', 'answered', '', data);
+};
+
 postsAPI.delete = async function (caller, data) {
 	await deleteOrRestore(caller, data, {
 		command: 'delete',

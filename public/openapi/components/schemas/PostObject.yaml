@@ -18,6 +18,8 @@ PostObject:
       type: boolean
     verify:
       type: number
+    answered:
+      type: number
     upvotes:
       type: number
     downvotes:

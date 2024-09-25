@@ -280,11 +280,20 @@ describe('Post\'s', () => {
 			assert.equal(hasBookmarked[0], false);
 		});
 	});
-
-	describe('answering', async () => {
+  
+  describe('verifying', async () => {
 		it('should mark post verified', async () => {
 			await apiPosts.verify({ uid: voterUid }, { pid: postData.pid, room_id: `topic_${postData.tid}` });
-			const isAnswered = await posts.getPostField(postData.pid, 'verify');
+			const isVerified = await posts.getPostField(postData.pid, 'verify');
+      assert.strictEqual(isVerified, 1);
+      });
+	});
+
+	describe('answering', async () => {
+		it('should mark post answered', async () => {
+			const data = await apiPosts.answer({ uid: voterUid }, { pid: postData.pid, room_id: `topic_${postData.tid}` });
+			const isAnswered = await posts.getPostField(postData.pid, 'answered');
+
 			assert.strictEqual(isAnswered, 1);
 		});
 	});

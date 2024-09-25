@@ -42,6 +42,9 @@ define('forum/topic/events', [
 
 		'posts.verify': toggleVerifyMessage,
 		'posts.unverify': toggleVerifyMessage,
+    
+		'posts.answer': toggleAnswered,
+		'posts.unanswer': toggleAnswered,
 
 		'posts.upvote': togglePostVote,
 		'posts.downvote': togglePostVote,
@@ -227,6 +230,10 @@ define('forum/topic/events', [
 
 		el.find('[component="post/bookmark/on"]').toggleClass('hidden', !data.isBookmarked);
 		el.find('[component="post/bookmark/off"]').toggleClass('hidden', data.isBookmarked);
+	}
+
+	function toggleAnswered() {
+		console.log('Toggling answered field.');
 	}
 
 	function togglePostVote(data) {

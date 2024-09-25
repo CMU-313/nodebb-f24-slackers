@@ -162,6 +162,17 @@ Posts.verify = async (req, res) => {
 Posts.unverify = async (req, res) => {
 	const data = await mock(req);
 	await api.posts.unverify(req, data);
+
+Posts.answer = async (req, res) => {
+	const data = await mock(req);
+	await api.posts.answer(req, data);
+	helpers.formatApiResponse(200, res);
+};
+
+Posts.unanswer = async (req, res) => {
+	const data = await mock(req);
+	await api.posts.unanswer(req, data);
+
 	helpers.formatApiResponse(200, res);
 };
 

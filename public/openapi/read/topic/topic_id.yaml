@@ -67,6 +67,8 @@ get:
                           type: number
                         deleted:
                           type: number
+                        answered:
+                          type: number
                         upvotes:
                           type: number
                         downvotes:
@@ -74,6 +76,8 @@ get:
                         bookmarks:
                           type: number
                         deleterUid:
+                          type: number
+                        answererUid:
                           type: number
                         edited:
                           type: number

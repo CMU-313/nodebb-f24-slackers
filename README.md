@@ -83,6 +83,7 @@ Interested in a sublicense agreement for use of NodeBB in a non-free/restrictive
 * [Follow us on Twitter](http://www.twitter.com/NodeBB/ "NodeBB Twitter")
 * [Like us on Facebook](http://www.facebook.com/NodeBB/ "NodeBB Facebook")
 
+=======
 ## Team Members
 Kester Tan 
 Anuja Uppuluri 
@@ -108,3 +109,4 @@ Here is how to set it up:
  ./nodebb stop && ./nodebb reset -t nodebb-theme-slackers && ./nodebb build && ./nodebb start
 ```
 4. Go to http://localhost:4567/ to see the new theme in action!
+

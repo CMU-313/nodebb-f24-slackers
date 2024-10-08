@@ -54,8 +54,8 @@ define('forum/category', [
 		hooks.fire('action:topics.loaded', { topics: ajaxify.data.topics });
 		hooks.fire('action:category.loaded', { cid: ajaxify.data.cid });
 
+		// Triggers searching
 		$('#category-search-text').on('keyup', Category.search);
-		$('#category-search-button').on('click', () => console.log('clicking?'));
 	};
 
 	function handleScrollToTopicIndex() {
@@ -125,35 +125,33 @@ define('forum/category', [
 		navigator.scrollBottom(count - 1);
 	};
 
+	// Triggered when key pressed on searchbar
 	Category.search = function () {
-		console.log('Category.search triggering yay');
+		// HTML elements
 		const topicsEl = $('.topics-list');
 		const queryEl = $('#category-search-text');
 
+		// Get all topics
 		socket.emit('topics.getTopicsByCid', {
 			cid: ajaxify.data.cid,
 		}, function (err, topics) {
-			console.log('Socket inside of Category.search triggery super yay');
-			console.log('topics is ', topics);
 			if (err) {
-				console.log('error in Category.search');
 				return alerts.error(err);
 			}
 
+			// Only keep topics that include search query
 			topics = topics.filter(topic => topic.title.toLowerCase().includes(queryEl.val().toLowerCase()));
 
+			// Shove topics back into HTML and render it
 			Benchpress.render('partials/topics_list', {
 				set: 'topics',
 				query: queryEl.val(),
 				topics: topics || [],
 			}).then(function (html) {
-				console.log(html);
-				console.log('ooh worked?');
 				topicsEl.empty().append(html);
 			});
 		});
 
-		console.log('Category.search returning yay');
 		return false;
 	};
 

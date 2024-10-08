@@ -130,10 +130,12 @@ define('forum/category', [
 		const topicsEl = $('.topics-list');
 		const queryEl = $('#category-search-text');
 
-		socket.emit('topics.searchAll', {
+		socket.emit('topics.getTopicsByCid', {
+			cid: ajaxify.data.cid,
 			query: queryEl.val(),
 		}, function (err, topics) {
 			console.log('Socket inside of Category.search triggery super yay');
+			console.log('topics is ', topics);
 			if (err) {
 				console.log('error in Category.search');
 				return alerts.error(err);
@@ -141,7 +143,7 @@ define('forum/category', [
 			Benchpress.render('partials/topics_list', {
 				set: 'topics',
 				query: queryEl.val(),
-				topics: [],
+				topics: topics || [],
 			}).then(function (html) {
 				console.log(html);
 				console.log('ooh worked?');

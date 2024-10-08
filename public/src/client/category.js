@@ -132,7 +132,6 @@ define('forum/category', [
 
 		socket.emit('topics.getTopicsByCid', {
 			cid: ajaxify.data.cid,
-			query: queryEl.val(),
 		}, function (err, topics) {
 			console.log('Socket inside of Category.search triggery super yay');
 			console.log('topics is ', topics);
@@ -140,6 +139,9 @@ define('forum/category', [
 				console.log('error in Category.search');
 				return alerts.error(err);
 			}
+
+			topics = topics.filter(topic => topic.title.toLowerCase().includes(queryEl.val().toLowerCase()));
+
 			Benchpress.render('partials/topics_list', {
 				set: 'topics',
 				query: queryEl.val(),

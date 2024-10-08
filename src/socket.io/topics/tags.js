@@ -71,6 +71,11 @@ module.exports = function (SocketTopics) {
 		return await method(data);
 	}
 
+	SocketTopics.searchAll = async function (query) {
+		console.log('OMG INSIDE TOPICS SEARCH ALL');
+		return { topics: [] };
+	};
+
 	// used by tag filter search
 	SocketTopics.tagFilterSearch = async function (socket, data) {
 		let cids = [];

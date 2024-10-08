@@ -2,6 +2,7 @@
 
 define('forum/category', [
 	'forum/infinitescroll',
+	'benchpress',
 	'share',
 	'navigator',
 	'topicList',
@@ -10,7 +11,7 @@ define('forum/category', [
 	'hooks',
 	'alerts',
 	'api',
-], function (infinitescroll, share, navigator, topicList, sort, categorySelector, hooks, alerts, api) {
+], function (infinitescroll, Benchpress, share, navigator, topicList, sort, categorySelector, hooks, alerts, api) {
 	const Category = {};
 
 	$(window).on('action:ajaxify.start', function (ev, data) {
@@ -53,7 +54,7 @@ define('forum/category', [
 		hooks.fire('action:topics.loaded', { topics: ajaxify.data.topics });
 		hooks.fire('action:category.loaded', { cid: ajaxify.data.cid });
 
-		$('#category-search-text').on('keyup', () => console.log('typing?'));
+		$('#category-search-text').on('keyup', Category.search);
 		$('#category-search-button').on('click', () => console.log('clicking?'));
 	};
 
@@ -124,8 +125,36 @@ define('forum/category', [
 		navigator.scrollBottom(count - 1);
 	};
 
+	Category.search = function () {
+		console.log('Category.search triggering yay');
+		const topicsEl = $('.topics-list');
+		const queryEl = $('#category-search-text');
+
+		socket.emit('topics.searchAll', {
+			query: queryEl.val(),
+		}, function (err, topics) {
+			console.log('Socket inside of Category.search triggery super yay');
+			if (err) {
+				console.log('error in Category.search');
+				return alerts.error(err);
+			}
+			Benchpress.render('partials/topics_list', {
+				set: 'topics',
+				query: queryEl.val(),
+				topics: [],
+			}).then(function (html) {
+				console.log(html);
+				console.log('ooh worked?');
+				topicsEl.empty().append(html);
+			});
+		});
+
+		console.log('Category.search returning yay');
+		return false;
+	};
+
 	function loadTopicsAfter(after, direction, callback) {
-		callback = callback || function () {};
+		callback = callback || function () { };
 
 		hooks.fire('action:topics.loading');
 		const params = utils.params();

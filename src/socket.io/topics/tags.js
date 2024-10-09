@@ -71,6 +71,23 @@ module.exports = function (SocketTopics) {
 		return await method(data);
 	}
 
+	// Triggered in Category.search
+	SocketTopics.getTopicsByCid = async function (socket, data) {
+		if (!data || !data.cid || !utils.isNumber(data.cid)) {
+			throw new Error('[[error:invalid-data]]');
+		}
+
+		const canRead = await privileges.categories.can('topics:read', data.cid, socket.uid);
+		if (!canRead) {
+			throw new Error('[[error:no-privileges]]');
+		}
+
+		// Get all topics within the category
+		const topicsData = await topics.getTopicsFromSet(`cid:${data.cid}:tids`, socket.uid, 0, -1);
+
+		return topicsData.topics;
+	};
+
 	// used by tag filter search
 	SocketTopics.tagFilterSearch = async function (socket, data) {
 		let cids = [];

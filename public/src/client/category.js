@@ -2,6 +2,7 @@
 
 define('forum/category', [
 	'forum/infinitescroll',
+	'benchpress',
 	'share',
 	'navigator',
 	'topicList',
@@ -10,7 +11,7 @@ define('forum/category', [
 	'hooks',
 	'alerts',
 	'api',
-], function (infinitescroll, share, navigator, topicList, sort, categorySelector, hooks, alerts, api) {
+], function (infinitescroll, Benchpress, share, navigator, topicList, sort, categorySelector, hooks, alerts, api) {
 	const Category = {};
 
 	$(window).on('action:ajaxify.start', function (ev, data) {
@@ -53,8 +54,8 @@ define('forum/category', [
 		hooks.fire('action:topics.loaded', { topics: ajaxify.data.topics });
 		hooks.fire('action:category.loaded', { cid: ajaxify.data.cid });
 
-		$('#category-search-text').on('keyup', () => console.log('typing?'));
-		$('#category-search-button').on('click', () => console.log('clicking?'));
+		// Triggers searching
+		$('#category-search-text').on('keyup', Category.search);
 	};
 
 	function handleScrollToTopicIndex() {
@@ -124,8 +125,38 @@ define('forum/category', [
 		navigator.scrollBottom(count - 1);
 	};
 
+	// Triggered when key pressed on searchbar
+	Category.search = function () {
+		// HTML elements
+		const topicsEl = $('.topics-list');
+		const queryEl = $('#category-search-text');
+
+		// Get all topics
+		socket.emit('topics.getTopicsByCid', {
+			cid: ajaxify.data.cid,
+		}, function (err, topics) {
+			if (err) {
+				return alerts.error(err);
+			}
+
+			// Only keep topics that include search query
+			topics = topics.filter(topic => topic.title.toLowerCase().includes(queryEl.val().toLowerCase()));
+
+			// Shove topics back into HTML and render it
+			Benchpress.render('partials/topics_list', {
+				set: 'topics',
+				query: queryEl.val(),
+				topics: topics || [],
+			}).then(function (html) {
+				topicsEl.empty().append(html);
+			});
+		});
+
+		return false;
+	};
+
 	function loadTopicsAfter(after, direction, callback) {
-		callback = callback || function () {};
+		callback = callback || function () { };
 
 		hooks.fire('action:topics.loading');
 		const params = utils.params();

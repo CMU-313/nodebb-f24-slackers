@@ -25,7 +25,6 @@ module.exports = function (Categories) {
 		const colours = Categories.assignColours();
 
 		let category = createCategory(data, cid, colours, slug, parentCid, order);
-		console.log('Anuja - createCategory');
 
 		if (data.backgroundImage) {
 			category.backgroundImage = data.backgroundImage;

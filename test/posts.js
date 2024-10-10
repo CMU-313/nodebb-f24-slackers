@@ -289,6 +289,14 @@ describe('Post\'s', () => {
 		});
 	});
 
+	describe('unverifying', async () => {
+		it('should mark post unverified', async () => {
+			await apiPosts.unverify({ uid: voterUid }, { pid: postData.pid, room_id: `topic_${postData.tid}` });
+			const isVerified = await posts.getPostField(postData.pid, 'verify');
+			assert.strictEqual(isVerified, 0);
+		});
+	});
+
 	describe('answering', async () => {
 		it('should mark post answered', async () => {
 			const data = await apiPosts.answer({ uid: voterUid }, { pid: postData.pid, room_id: `topic_${postData.tid}` });

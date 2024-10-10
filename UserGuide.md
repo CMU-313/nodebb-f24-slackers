@@ -39,3 +39,11 @@ TODO (include file location of automated tests)
 TODO
 ### Automated testing
 TODO (include file location of automated tests)
+
+
+## Verify Message
+### How to use
+Our verify message component is found under the dropdown beside a post. Notice how there is a cross beside the post/comment. This indicates that the post/comment is not yet verified. If you are an administrator or moderator, you can click verify message to verify the post/comment. Refresh the page to notice that the cross has now been changed to a tick. 
+
+### Automated testing
+Automated tests for permissions and for backend APIs for verify/unverify message can be found in `tests/posts.js`.

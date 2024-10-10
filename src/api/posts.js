@@ -422,10 +422,29 @@ postsAPI.unbookmark = async function (caller, data) {
 };
 
 postsAPI.verify = async function (caller, data) {
+	const cid = await posts.getCidByPid(data.pid);
+
+	const [isAdmin, isModerator] = await Promise.all([
+		privileges.users.isAdministrator(caller.uid),
+		privileges.users.isModerator(caller.uid, cid),
+	]);
+
+	if (!(isAdmin || isModerator)) {
+		throw new Error('[[error:no-privileges]]');
+	}
 	return await apiHelpers.postCommand(caller, 'verify', 'verify', '', data);
 };
 
 postsAPI.unverify = async function (caller, data) {
+	const cid = await posts.getCidByPid(data.pid);
+	const [isAdmin, isModerator] = await Promise.all([
+		privileges.users.isAdministrator(caller.uid),
+		privileges.users.isModerator(caller.uid, cid),
+	]);
+
+	if (!(isAdmin || isModerator)) {
+		throw new Error('[[error:no-privileges]]');
+	}
 	return await apiHelpers.postCommand(caller, 'unverify', 'unverify', '', data);
 };
 

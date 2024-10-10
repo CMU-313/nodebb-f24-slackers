@@ -283,17 +283,45 @@ describe('Post\'s', () => {
 
 	describe('verifying', async () => {
 		it('should mark post verified', async () => {
-			await apiPosts.verify({ uid: voterUid }, { pid: postData.pid, room_id: `topic_${postData.tid}` });
+			const uid = await user.create({ username: 'global student', password: '123456' });
+			await groups.join('Global Moderators', uid);
+			await apiPosts.verify({ uid: uid }, { pid: postData.pid, room_id: `topic_${postData.tid}` });
 			const isVerified = await posts.getPostField(postData.pid, 'verify');
 			assert.strictEqual(isVerified, 1);
 		});
 	});
 
+	describe('should not be able to verify message if it is not a mod or instructor', async () => {
+		it('should not mark post verified', async () => {
+			const uid = await user.create({ username: 'global student', password: '123456' });
+			try {
+				await apiPosts.verify({ uid: uid }, { pid: postData.pid, room_id: `topic_${postData.tid}` });
+			} catch (err) {
+				return assert.equal(err.message, '[[error:no-privileges]]');
+			}
+			assert(false);
+		});
+	});
+
 	describe('unverifying', async () => {
 		it('should mark post unverified', async () => {
-			await apiPosts.unverify({ uid: voterUid }, { pid: postData.pid, room_id: `topic_${postData.tid}` });
+			const uid = await user.create({ username: 'global student', password: '123456' });
+			await groups.join('Global Moderators', uid);
+			await apiPosts.unverify({ uid: uid }, { pid: postData.pid, room_id: `topic_${postData.tid}` });
 			const isVerified = await posts.getPostField(postData.pid, 'verify');
 			assert.strictEqual(isVerified, 0);
+		});
+	});
+
+	describe('should not be able to unverify message if it is not a mod or instructor', async () => {
+		it('should not mark post verified', async () => {
+			const uid = await user.create({ username: 'global student', password: '123456' });
+			try {
+				await apiPosts.unverify({ uid: uid }, { pid: postData.pid, room_id: `topic_${postData.tid}` });
+			} catch (err) {
+				return assert.equal(err.message, '[[error:no-privileges]]');
+			}
+			assert(false);
 		});
 	});
 

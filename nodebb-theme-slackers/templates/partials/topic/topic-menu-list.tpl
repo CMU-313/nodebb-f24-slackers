@@ -7,12 +7,12 @@
 	<a component="topic/unlock" href="#" class="dropdown-item rounded-1 d-flex align-items-center gap-2 {{{ if !locked }}}hidden{{{ end }}}" role="menuitem"><i class="fa fa-fw fa-unlock text-secondary"></i> [[topic:thread-tools.unlock]]</a>
 </li>
 
-<li {{{ if locked }}}hidden{{{ end }}}>
-	<a component="topic/lock" href="#" class="dropdown-item rounded-1 d-flex align-items-center gap-2 {{{ if locked }}}hidden{{{ end }}}" role="menuitem"><i class="fa fa-fw fa-lock text-secondary"></i> [[topic:thread-tools.answer]]</a>
+<li {{{ if ed }}}hidden{{{ end }}}>
+	<a component="topic/answer" href="#" class="dropdown-item rounded-1 d-flex align-items-center gap-2 {{{ if answered }}}hidden{{{ end }}}" role="menuitem"><i class="fa fa-fw fa-lock text-secondary"></i> [[topic:thread-tools.answer]]</a>
 </li>
 
-<li {{{ if !locked }}}hidden{{{ end }}}>
-	<a component="topic/unlock" href="#" class="dropdown-item rounded-1 d-flex align-items-center gap-2 {{{ if !locked }}}hidden{{{ end }}}" role="menuitem"><i class="fa fa-fw fa-unlock text-secondary"></i> [[topic:thread-tools.unanswer]]</a>
+<li {{{ if !answered }}}hidden{{{ end }}}>
+	<a component="topic/unanswer" href="#" class="dropdown-item rounded-1 d-flex align-items-center gap-2 {{{ if !answered }}}hidden{{{ end }}}" role="menuitem"><i class="fa fa-fw fa-unlock text-secondary"></i> [[topic:thread-tools.unanswer]]</a>
 </li>
 
 <li {{{ if pinned }}}hidden{{{ end }}}>

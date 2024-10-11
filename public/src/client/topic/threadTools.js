@@ -51,6 +51,16 @@ define('forum/topic/threadTools', [
 			return false;
 		});
 
+		topicContainer.on('click', '[component="topic/answer"]', function () {
+			topicCommand('put', '/answer', 'answer');
+			return false;
+		});
+
+		topicContainer.on('click', '[component="topic/unanswer"]', function () {
+			topicCommand('del', '/answer', 'unanswer');
+			return false;
+		});
+
 		topicContainer.on('click', '[component="topic/pin"]', function () {
 			topicCommand('put', '/pin', 'pin');
 			return false;
@@ -320,6 +330,34 @@ define('forum/topic/threadTools', [
 		posts.addTopicEvents(data.events);
 	};
 
+	ThreadTools.setAnsweredState = function (data) {
+		const threadEl = components.get('topic');
+		if (parseInt(data.tid, 10) !== parseInt(threadEl.attr('data-tid'), 10)) {
+			return;
+		}
+
+		const isAnswered = data.isAnswered && !ajaxify.data.privileges.isAdminOrMod;
+
+		components.get('topic/answer').toggleClass('hidden', data.isAnswered).parent().attr('hidden', data.isAnswered ? '' : null);
+		components.get('topic/unanswer').toggleClass('hidden', !data.isAnswered).parent().attr('hidden', !data.isAnswered ? '' : null);
+
+		const hideReply = !!((data.isAnswered || ajaxify.data.deleted) && !ajaxify.data.privileges.isAdminOrMod);
+
+		components.get('topic/reply/container').toggleClass('hidden', hideReply);
+		components.get('topic/reply/answered').toggleClass('hidden', ajaxify.data.privileges.isAdminOrMod || !data.isAnswered || ajaxify.data.deleted);
+
+		threadEl.find('[component="post"]:not(.deleted) [component="post/reply"], [component="post"]:not(.deleted) [component="post/quote"]').toggleClass('hidden', hideReply);
+		threadEl.find('[component="post/edit"], [component="post/delete"]').toggleClass('hidden', isAnswered);
+
+		threadEl.find('[component="post"][data-uid="' + app.user.uid + '"].deleted [component="post/tools"]').toggleClass('hidden', isAnswered);
+
+		$('[component="topic/labels"] [component="topic/answered"]').toggleClass('hidden', !data.isAnswered);
+		$('[component="post/tools"] .dropdown-menu').html('');
+		ajaxify.data.answered = data.isAnswered;
+
+		posts.addTopicEvents(data.events);
+	};
+
 	ThreadTools.setDeleteState = function (data) {
 		const threadEl = components.get('topic');
 		if (parseInt(data.tid, 10) !== parseInt(threadEl.attr('data-tid'), 10)) {
@@ -345,6 +383,7 @@ define('forum/topic/threadTools', [
 
 		components.get('topic/reply/container').toggleClass('hidden', hideReply);
 		components.get('topic/reply/locked').toggleClass('hidden', ajaxify.data.privileges.isAdminOrMod || !ajaxify.data.locked || data.isDelete);
+		components.get('topic/reply/answered').toggleClass('hidden', ajaxify.data.privileges.isAdminOrMod || !ajaxify.data.answered || data.isDelete);
 		threadEl.find('[component="post"]:not(.deleted) [component="post/reply"], [component="post"]:not(.deleted) [component="post/quote"]').toggleClass('hidden', hideReply);
 
 		threadEl.toggleClass('deleted', data.isDelete);

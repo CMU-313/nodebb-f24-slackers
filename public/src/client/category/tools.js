@@ -46,6 +46,16 @@ define('forum/category/tools', [
 			return false;
 		});
 
+		components.get('topic/answer').on('click', function () {
+			categoryCommand('put', '/answer', 'answer', onCommandComplete);
+			return false;
+		});
+
+		components.get('topic/unanswer').on('click', function () {
+			categoryCommand('del', '/answer', 'unanswer', onCommandComplete);
+			return false;
+		});
+
 		components.get('topic/pin').on('click', function () {
 			categoryCommand('put', '/pin', 'pin', onCommandComplete);
 			return false;
@@ -134,6 +144,8 @@ define('forum/category/tools', [
 		socket.on('event:topic_purged', onTopicPurged);
 		socket.on('event:topic_locked', setLockedState);
 		socket.on('event:topic_unlocked', setLockedState);
+		socket.on('event:topic_answered', setAnsweredState);
+		socket.on('event:topic_unanswered', setAnsweredState);
 		socket.on('event:topic_pinned', setPinnedState);
 		socket.on('event:topic_unpinned', setPinnedState);
 		socket.on('event:topic_moved', onTopicMoved);
@@ -180,6 +192,8 @@ define('forum/category/tools', [
 		socket.removeListener('event:topic_purged', onTopicPurged);
 		socket.removeListener('event:topic_locked', setLockedState);
 		socket.removeListener('event:topic_unlocked', setLockedState);
+		socket.removeListener('event:topic_answered', setAnsweredState);
+		socket.removeListener('event:topic_unanswered', setAnsweredState);
 		socket.removeListener('event:topic_pinned', setPinnedState);
 		socket.removeListener('event:topic_unpinned', setPinnedState);
 		socket.removeListener('event:topic_moved', onTopicMoved);
@@ -211,6 +225,7 @@ define('forum/category/tools', [
 		const areAllDeleted = areAll(isTopicDeleted, tids);
 		const isAnyPinned = isAny(isTopicPinned, tids);
 		const isAnyLocked = isAny(isTopicLocked, tids);
+		const isAnyAnswered = isAny(isTopicAnswered, tids);
 		const isAnyScheduled = isAny(isTopicScheduled, tids);
 		const areAllScheduled = areAll(isTopicScheduled, tids);
 
@@ -220,6 +235,9 @@ define('forum/category/tools', [
 
 		components.get('topic/lock').toggleClass('hidden', isAnyLocked);
 		components.get('topic/unlock').toggleClass('hidden', !isAnyLocked);
+
+		components.get('topic/answer').toggleClass('hidden', isAnyAnswered);
+		components.get('topic/unanswer').toggleClass('hidden', !isAnyAnswered);
 
 		components.get('topic/pin').toggleClass('hidden', areAllScheduled || isAnyPinned);
 		components.get('topic/unpin').toggleClass('hidden', areAllScheduled || !isAnyPinned);
@@ -253,6 +271,10 @@ define('forum/category/tools', [
 		return getTopicEl(tid).hasClass('locked');
 	}
 
+	function isTopicAnswered(tid) {
+		return getTopicEl(tid).hasClass('answered');
+	}
+
 	function isTopicPinned(tid) {
 		return getTopicEl(tid).hasClass('pinned');
 	}
@@ -282,6 +304,12 @@ define('forum/category/tools', [
 		const topic = getTopicEl(data.tid);
 		topic.toggleClass('locked', data.isLocked);
 		topic.find('[component="topic/locked"]').toggleClass('hidden', !data.isLocked);
+	}
+
+	function setAnsweredState(data) {
+		const topic = getTopicEl(data.tid);
+		topic.toggleClass('answered', data.isAnswered);
+		topic.find('[component="topic/answered"]').toggleClass('hidden', !data.isAnswered);
 	}
 
 	function onTopicMoved(data) {

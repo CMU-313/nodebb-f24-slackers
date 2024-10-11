@@ -32,13 +32,17 @@ Our search bar component is found under any category. After launching the local 
 If you set up the theme properly, you should see a search bar in between the title and the tags/filters. Simply click on this search bar and type a search query. If there are existing topics within this category that contain that search query, they will be displayed. You can still click on any of these topics after being filtered and it will properly navigate you to within the topic.
 
 ### Automated testing
-TODO (include file location of automated tests)
-
+The automated tests for the search bar component can be found in the tests/search.js file. The key aspects covered in these tests include:
+Search by Query in Titles and Posts: Ensures that searching for a keyword returns the correct topics and posts containing that keyword within a category.
+User-based Search: Confirms that searching for a specific user returns the correct results.
+Tag-based Search: Verifies that searching for specific tags brings back topics tagged appropriately.
+Category-based Search: Ensures that search results within a category and its subcategories return accurate matches.
+Error Handling: Tests that incorrect or empty search queries are handled gracefully, returning appropriate error messages or undefined results.
+These tests validate searching within categories, ensuring proper results are returned for different search queries, and also check for edge cases like empty queries or invalid filters.
 ## Tags
 ### How to use
-TODO
-### Automated testing
-TODO (include file location of automated tests)
+Navigate to the project root directory.
+Run npm run test to execute all tests after lint etc 
 
 
 ## Verify Message

@@ -693,7 +693,7 @@ describe('Topic\'s', () => {
 		it('should unanswer topic', async () => {
 			await apiTopics.unanswer({ uid: adminUid }, { tids: [newTopic.tid], cid: categoryObj.cid });
 			const isAnswered = await topics.isAnswered(newTopic.tid);
-			assert(isAnswered);
+			assert(!isAnswered);
 		});
 
 		it('should unlock topic', async () => {

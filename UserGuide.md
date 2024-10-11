@@ -51,3 +51,11 @@ Our verify message component is found under the dropdown beside a post. Notice h
 
 ### Automated testing
 Automated tests for permissions and for backend APIs for verify/unverify message can be found in `tests/posts.js`.
+
+
+## Answer Question
+### How to use
+The Answer question component works similarly to the verify message functionality. You can navigate to a topic and click on the dropdown tools. There will then be a "answer/unanswer" button. When pressed you can see a tag appear under the topic title stating if it has been answered.
+
+### Automated testing
+Automated tests for the backend can be found in `tests/topics.js`.

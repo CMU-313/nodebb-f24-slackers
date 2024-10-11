@@ -414,6 +414,7 @@ describe('Topic\'s', () => {
 				assert.strictEqual(topicData.votes, 0);
 				assert.strictEqual(topicData.deleted, 0);
 				assert.strictEqual(topicData.locked, 0);
+				assert.strictEqual(topicData.answered, 0);
 				assert.strictEqual(topicData.pinned, 0);
 				done();
 			});
@@ -463,6 +464,7 @@ describe('Topic\'s', () => {
 				assert.equal(data.unreplied, false);
 				assert.equal(data.deleted, false);
 				assert.equal(data.locked, false);
+				assert.equal(data.answered, false);
 				assert.equal(data.pinned, false);
 			});
 
@@ -682,10 +684,22 @@ describe('Topic\'s', () => {
 			assert(isLocked);
 		});
 
+		it('should answer topic', async () => {
+			await apiTopics.answer({ uid: adminUid }, { tids: [newTopic.tid], cid: categoryObj.cid });
+			const isAnswered = await topics.isAnswered(newTopic.tid);
+			assert(isAnswered);
+		});
+
+		it('should unanswer topic', async () => {
+			await apiTopics.unanswer({ uid: adminUid }, { tids: [newTopic.tid], cid: categoryObj.cid });
+			const isAnswered = await topics.isAnswered(newTopic.tid);
+			assert(!isAnswered);
+		});
+
 		it('should unlock topic', async () => {
 			await apiTopics.unlock({ uid: adminUid }, { tids: [newTopic.tid], cid: categoryObj.cid });
-			const isLocked = await topics.isLocked(newTopic.tid);
-			assert(!isLocked);
+			const isAnswered = await topics.isAnswered(newTopic.tid);
+			assert(!isAnswered);
 		});
 
 		it('should pin topic', async () => {

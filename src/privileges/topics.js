@@ -22,7 +22,7 @@ privsTopics.get = async function (tid, uid) {
 		'posts:upvote', 'posts:downvote',
 		'posts:delete', 'posts:view_deleted', 'read', 'purge',
 	];
-	const topicData = await topics.getTopicFields(tid, ['cid', 'uid', 'locked', 'deleted', 'scheduled']);
+	const topicData = await topics.getTopicFields(tid, ['cid', 'uid', 'locked', 'answered', 'deleted', 'scheduled']);
 	const [userPrivileges, isAdministrator, isModerator, disabled] = await Promise.all([
 		helpers.isAllowedTo(privs, uid, topicData.cid),
 		user.isAdministrator(uid),
@@ -37,16 +37,16 @@ privsTopics.get = async function (tid, uid) {
 	const mayReply = privsTopics.canViewDeletedScheduled(topicData, {}, false, privData['topics:schedule']);
 
 	return await plugins.hooks.fire('filter:privileges.topics.get', {
-		'topics:reply': (privData['topics:reply'] && ((!topicData.locked && mayReply) || isModerator)) || isAdministrator,
+		'topics:reply': (privData['topics:reply'] && ((!topicData.locked && !topicData.answered && mayReply) || isModerator)) || isAdministrator,
 		'topics:read': privData['topics:read'] || isAdministrator,
 		'topics:schedule': privData['topics:schedule'] || isAdministrator,
 		'topics:tag': privData['topics:tag'] || isAdministrator,
 		'topics:delete': (privData['topics:delete'] && (isOwner || isModerator)) || isAdministrator,
-		'posts:edit': (privData['posts:edit'] && (!topicData.locked || isModerator)) || isAdministrator,
+		'posts:edit': (privData['posts:edit'] && ((!topicData.locked && !topicData.answered) || isModerator)) || isAdministrator,
 		'posts:history': privData['posts:history'] || isAdministrator,
 		'posts:upvote': privData['posts:upvote'] || isAdministrator,
 		'posts:downvote': privData['posts:downvote'] || isAdministrator,
-		'posts:delete': (privData['posts:delete'] && (!topicData.locked || isModerator)) || isAdministrator,
+		'posts:delete': (privData['posts:delete'] && ((!topicData.locked && !topicData.answered) || isModerator)) || isAdministrator,
 		'posts:view_deleted': privData['posts:view_deleted'] || isAdministrator,
 		read: privData.read || isAdministrator,
 		purge: (privData.purge && (isOwner || isModerator)) || isAdministrator,

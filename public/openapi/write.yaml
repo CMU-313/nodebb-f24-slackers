@@ -144,6 +144,8 @@ paths:
     $ref: 'write/topics/tid/state.yaml'
   /topics/{tid}/lock:
     $ref: 'write/topics/tid/lock.yaml'
+  /topics/{tid}/answer:
+    $ref: 'write/topics/tid/answer.yaml'
   /topics/{tid}/pin:
     $ref: 'write/topics/tid/pin.yaml'
   /topics/{tid}/follow:

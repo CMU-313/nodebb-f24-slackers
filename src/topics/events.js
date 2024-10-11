@@ -44,6 +44,14 @@ Events._types = {
 		icon: 'fa-unlock',
 		translation: async (event, language) => translateSimple(event, language, 'topic:user-unlocked-topic'),
 	},
+	answer: {
+		icon: 'fa-lock',
+		translation: async (event, language) => translateSimple(event, language, 'topic:user-locked-topic'),
+	},
+	unanswer: {
+		icon: 'fa-unlock',
+		translation: async (event, language) => translateSimple(event, language, 'topic:user-unlocked-topic'),
+	},
 	delete: {
 		icon: 'fa-trash',
 		translation: async (event, language) => translateSimple(event, language, 'topic:user-deleted-topic'),

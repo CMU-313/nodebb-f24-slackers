@@ -150,6 +150,11 @@ privsPosts.canEdit = async function (pid, uid) {
 		return { flag: false, message: '[[error:topic-locked]]' };
 	}
 
+	const isAnswered = await topics.isAnswered(results.postData.tid);
+	if (!results.isMod && isAnswered) {
+		return { flag: false, message: '[[error:topic-answered]]' };
+	}
+
 	if (!results.isMod && results.postData.deleted && parseInt(uid, 10) !== parseInt(results.postData.deleterUid, 10)) {
 		return { flag: false, message: '[[error:post-deleted]]' };
 	}
@@ -167,6 +172,7 @@ privsPosts.canDelete = async function (pid, uid) {
 		isAdmin: user.isAdministrator(uid),
 		isMod: posts.isModerator([pid], uid),
 		isLocked: topics.isLocked(postData.tid),
+		isAnswered: topics.isAnswered(postData.tid),
 		isOwner: posts.isOwner(pid, uid),
 		'posts:delete': privsPosts.can('posts:delete', pid, uid),
 	});
@@ -177,6 +183,10 @@ privsPosts.canDelete = async function (pid, uid) {
 
 	if (!results.isMod && results.isLocked) {
 		return { flag: false, message: '[[error:topic-locked]]' };
+	}
+
+	if (!results.isMod && results.isAnswered) {
+		return { flag: false, message: '[[error:topic-answered]]' };
 	}
 
 	const { postDeleteDuration } = meta.config;

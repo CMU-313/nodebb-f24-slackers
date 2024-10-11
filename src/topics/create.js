@@ -294,7 +294,7 @@ module.exports = function (Topics) {
 			throw new Error('[[error:no-topic]]');
 		}
 		const { tid, uid } = data;
-		const { cid, deleted, locked, scheduled } = topicData;
+		const { cid, deleted, locked, answered, scheduled } = topicData;
 
 		const [canReply, canSchedule, isAdminOrMod] = await Promise.all([
 			privileges.topics.can('topics:reply', tid, uid),
@@ -304,6 +304,10 @@ module.exports = function (Topics) {
 
 		if (locked && !isAdminOrMod) {
 			throw new Error('[[error:topic-locked]]');
+		}
+
+		if (answered && !isAdminOrMod) {
+			throw new Error('[[error:topic-answered]]');
 		}
 
 		if (!scheduled && deleted && !isAdminOrMod) {

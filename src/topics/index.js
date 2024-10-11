@@ -297,6 +297,11 @@ Topics.isLocked = async function (tid) {
 	return locked === 1;
 };
 
+Topics.isAnswered = async function (tid) {
+	const answered = await Topics.getTopicField(tid, 'answered');
+	return answered === 1;
+};
+
 Topics.search = async function (tid, term) {
 	if (!tid || !term) {
 		throw new Error('[[error:invalid-data]]');

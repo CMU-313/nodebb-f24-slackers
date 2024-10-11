@@ -161,6 +161,18 @@ topicsAPI.unlock = async function (caller, data) {
 	});
 };
 
+topicsAPI.answer = async function (caller, data) {
+	await doTopicAction('answer', 'event:topic_answered', caller, {
+		tids: data.tids,
+	});
+};
+
+topicsAPI.unanswer = async function (caller, data) {
+	await doTopicAction('unanswer', 'event:topic_unanswered', caller, {
+		tids: data.tids,
+	});
+};
+
 topicsAPI.follow = async function (caller, data) {
 	await topics.follow(data.tid, caller.uid);
 };

@@ -110,6 +110,32 @@ module.exports = function (Topics) {
 		return topicData;
 	}
 
+	topicTools.answer = async function (tid, uid) {
+		return await toggleAnswer(tid, uid, true);
+	};
+
+	topicTools.unanswer = async function (tid, uid) {
+		return await toggleAnswer(tid, uid, false);
+	};
+
+	async function toggleAnswer(tid, uid, answer) {
+		const topicData = await Topics.getTopicFields(tid, ['tid', 'uid', 'cid']);
+		if (!topicData || !topicData.cid) {
+			throw new Error('[[error:no-topic]]');
+		}
+		const isAdminOrMod = await privileges.categories.isAdminOrMod(topicData.cid, uid);
+		if (!isAdminOrMod) {
+			throw new Error('[[error:no-privileges]]');
+		}
+		await Topics.setTopicField(tid, 'answered', answer ? 1 : 0);
+		topicData.events = await Topics.events.log(tid, { type: answer ? 'answer' : 'unanswer', uid });
+		topicData.isAnswered = answer; // deprecate in v2.0
+		topicData.answered = answer;
+
+		plugins.hooks.fire('action:topic.answer', { topic: _.clone(topicData), uid: uid });
+		return topicData;
+	}
+
 	topicTools.pin = async function (tid, uid) {
 		return await togglePin(tid, uid, true);
 	};

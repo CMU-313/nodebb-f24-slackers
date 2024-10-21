@@ -50,5 +50,5 @@ jobs:
         with:
           app-name: 'nodebb-slackers'
           slot-name: 'Production'
-          publish-profile: ${{ kcap.AZUREAPPSERVICE_PUBLISHPROFILE_BFAB97B1AB1441ACA7C63280F91AD3F3 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7466ABA2A6D448E0971F6B6AFC0410DE }}
           package: .

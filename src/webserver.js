@@ -9,6 +9,22 @@ const express = require('express');
 const chalk = require('chalk');
 
 const app = express();
+
+const { exec } = require('child_process');
+
+// Start Iroh node
+exec('iroh start', (error, stdout, stderr) => {
+  if (error) {
+    console.error(`Error starting Iroh: ${error.message}`);
+    return;
+  }
+  if (stderr) {
+    console.error(`Iroh stderr: ${stderr}`);
+    return;
+  }
+  console.log(`Iroh stdout: ${stdout}`);
+});
+
 app.renderAsync = util.promisify((tpl, data, callback) => app.render(tpl, data, callback));
 let server;
 const winston = require('winston');

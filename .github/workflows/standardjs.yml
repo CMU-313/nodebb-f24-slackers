@@ -25,6 +25,7 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working directory: ./install
 
       - name: Run StandardJS
         run: npx standard

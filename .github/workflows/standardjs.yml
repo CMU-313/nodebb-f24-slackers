@@ -1,0 +1,30 @@
+name: StandardJS Lint
+
+on:
+  pull_request:
+    branches:
+      - f24
+      - standard-js-tool
+  push:
+    branches:
+      - f24
+      - standard-js-tool
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run StandardJS
+        run: npx standard

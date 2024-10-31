@@ -24,12 +24,8 @@ jobs:
           node-version: 'lts/*'
 
       - name: Install dependencies
-        run: npm install
-<<<<<<< HEAD
+        run: npm install\
         working-directory: ./install
-=======
-        working directory: ./install
->>>>>>> 24d2c88671934b6808707f5a683960ce4689fa75
 
       - name: Run StandardJS
         run: npx standard

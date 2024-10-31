@@ -25,7 +25,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+<<<<<<< HEAD
         working-directory: ./install
+=======
+        working directory: ./install
+>>>>>>> 24d2c88671934b6808707f5a683960ce4689fa75
 
       - name: Run StandardJS
         run: npx standard

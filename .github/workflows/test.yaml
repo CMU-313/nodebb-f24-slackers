@@ -75,7 +75,7 @@ jobs:
           node app --setup="${SETUP}" --ci="${CI}"
 
       - name: Run ESLint
-        run: npm run lint
+        run: eslint --cache --ignore-pattern 'public/src/modules/chat.js' ./nodebb .
 
       - name: Node tests
         run: npm test

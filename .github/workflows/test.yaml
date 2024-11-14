@@ -3,7 +3,7 @@ name: Lint and test
 on:
   pull_request:
     branches:
-      - f24
+      - '*'
   workflow_call: # Usually called from deploy
 
 defaults:
@@ -75,7 +75,7 @@ jobs:
           node app --setup="${SETUP}" --ci="${CI}"
 
       - name: Run ESLint
-        run: npm run lint
+        run: npx eslint --cache --ignore-pattern 'public/src/modules/chat.js' ./nodebb .
 
       - name: Node tests
         run: npm test

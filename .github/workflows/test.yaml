@@ -23,14 +23,12 @@ jobs:
     services:
       redis:
         image: 'redis:7.2.4'
-        # Set health checks to wait until redis has started
         options: >-
           --health-cmd "redis-cli ping"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
         ports:
-          # Maps port 6379 on service container to the host
           - 6379:6379
 
     steps:
@@ -58,7 +56,6 @@ jobs:
               "admin:email": "test@example.org",
               "admin:password": "hAN3Eg8W",
               "admin:password:confirm": "hAN3Eg8W",
-
               "database": "redis",
               "redis:host": "127.0.0.1",
               "redis:port": 6379,
@@ -85,3 +82,20 @@ jobs:
 
       - name: Test coverage
         uses: coverallsapp/github-action@v2
+
+      # Python setup and run for Translator Tests
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'  # Adjust to your version
+
+      - name: Install Python dependencies
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install -r translator-service/requirements.txt
+
+      - name: Run Translator Tests
+        run: |
+          source .venv/bin/activate
+          pytest test/unit/test_translator.py  # Adjust path if necessary

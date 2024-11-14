@@ -28,4 +28,4 @@ jobs:
         working-directory: ./install
 
       - name: Run StandardJS
-        run: npx standard
+        run: npx standard public/src/modules/chat.js

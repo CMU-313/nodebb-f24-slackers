@@ -3,7 +3,7 @@ name: Lint and test
 on:
   pull_request:
     branches:
-      - f24
+      - '*'
   workflow_call: # Usually called from deploy
 
 defaults:

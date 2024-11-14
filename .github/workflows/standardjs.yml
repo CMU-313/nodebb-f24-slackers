@@ -3,12 +3,10 @@ name: StandardJS Lint
 on:
   pull_request:
     branches:
-      - f24
-      - standard-js-tool
+      - '*'
   push:
     branches:
-      - f24
-      - standard-js-tool
+      - '*'
 
 jobs:
   lint:

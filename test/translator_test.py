@@ -5,7 +5,6 @@ class TestTranslator(unittest.TestCase):
     def test_llm_normal_response(self):
         """Test normal LLM response"""
         with patch('openai.AzureOpenAI') as mock_client:
-            # Mock the client responses
             mock_responses = [
                 Mock(choices=[Mock(message=Mock(content="No"))]),  # Language detection
                 Mock(choices=[Mock(message=Mock(content="Hello world"))]),  # Translation
